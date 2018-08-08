@@ -55,3 +55,4 @@ for idx, val in enumerate(responses):
     data[question['id']] = ques + '+' + choices + '+' + answer
 
 pkl.dump(data, open(path+'_FORMATTED.pkl', 'w'))
+
