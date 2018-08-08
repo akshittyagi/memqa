@@ -3,15 +3,15 @@ import pickle as pkl
 
 from data import DataReader
 
-dirname = 'AI2-ScienceQuestions-V1-Feb2016/AI2-Elementary-NDMC-v1'
-prefix = 'Elementary-NDMC-'
+dirname = 'AI2-ScienceQuestions-V2.1-Jan2018'
+prefix = 'ElementarySchool'
 
-trainPath = os.path.join(dirname, prefix+'Train.jsonl')
-testPath = os.path.join(dirname, prefix+'Test.jsonl')
-devPath = os.path.join(dirname, prefix+'Dev.jsonl')
+trainPath = os.path.join(dirname, prefix, 'Elementary-NDMC-'+'Train.jsonl')
+testPath = os.path.join(dirname, prefix, 'Elementary-NDMC-'+'Test.jsonl')
+devPath = os.path.join(dirname, prefix, 'Elementary-NDMC-'+'Dev.jsonl')
 
-reader = DataReader(trainPath, testPath, devPath)
-
+# reader = DataReader(trainPath, testPath, devPath)
+reader = DataReader('/home/akshit/train.jsonl', testPath, devPath)
 reader.createDataSet('Train')
 reader.createDataSet('Dev')
 reader.createDataSet('Test')

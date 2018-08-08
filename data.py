@@ -19,33 +19,35 @@ class DataReader():
         elif flag is 'Dev':
             filepath = self.pathToDev
         else:
-            filepath = self.pathToTrain
+            filepath = self.pathToTest
         
         fil = open(filepath, 'r')
         data = {}
+        count = 0
         for line in fil:
             js = json.loads(line)
             key = js['id']
             question = js['question']['stem']
-            if len(js['question']['choices']) is not 4:
-                print "-----------!!!!!!!!!!!!!--------------"
-                print js['question']['choices']
-                print "-----------!!!!!!!!!!!!!--------------"
-                continue
             answerChoiceA = js['question']['choices'][0]['text']
             answerChoiceB = js['question']['choices'][1]['text'] 
             answerChoiceC = js['question']['choices'][2]['text']
-            answerChoiceD = js['question']['choices'][3]['text']
+            answerChoiceD = 'None'
+            if len(js['question']['choices']) != 4:
+                print "----------------------------------------------------------------"
+                print "---------- FOUND less than 3 answer choices for question: ", key
+                print "----------------------------------------------------------------"
+            else:
+                answerChoiceD = js['question']['choices'][3]['text']
+                
             correct = js['answerKey']
             
             # Format : QUESTIONTEXT+A/B/C/D+CORRECTANSWER
-            # print "ID", key, " TEXT: ", question + '+' + answerChoiceA + '/' + answerChoiceB + '/' + answerChoiceC + '/' + answerChoiceD + '+' + correct
-        
+            print "ID", key, " TEXT: ", question + '+' + answerChoiceA + '/' + answerChoiceB + '/' + answerChoiceC + '/' + answerChoiceD + '+' + correct
+            count += 1
             data[key] = question + '+' + answerChoiceA + '/' + answerChoiceB + '/' + answerChoiceC + '/' + answerChoiceD + '+' + correct
-        
         pkl.dump(data, open(filepath+'_FORMATTED.pkl', 'w'))
         print "Saving for ", flag, " at ", filepath+'_FORMATTED.pkl'
-    
+        print count
 
 class TupleReader():
 
